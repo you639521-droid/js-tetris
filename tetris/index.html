@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Tetris</title>
+  <style>
+    body {
+      background: #090a0f;
+      color: #e0e6ed;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    /* 全体コンテナの余白と隙間を広げてゆとりを持たせる */
+    .container {
+      display: flex;
+      gap: 36px; /* 隙間を24px→36pxに拡大 */
+      align-items: flex-start;
+      background: rgba(18, 20, 29, 0.85);
+      padding: 40px; /* 内側の余白を28px→40pxに拡大 */
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6),
+                  0 0 30px rgba(0, 240, 240, 0.05);
+    }
+
+    /* メイン画面の枠線を少し優しくして圧迫感を軽減 */
+    canvas {
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-width: 120px; /* サイドバーの幅も少しゆとりを配置 */
+    }
+
+    /* パネルの内側余白を調整 */
+    .panel {
+      background: #11131d;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 16px; /* パディングを拡大 */
+      text-align: center;
+    }
+
+    .panel-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #6b7280;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+    }
+
+    .score-num {
+      font-size: 22px;
+      font-weight: 800;
+      color: #00f0f0;
+      text-shadow: 0 0 8px rgba(0, 240, 240, 0.4);
+    }
+
+    /* 操作説明エリアのデザイン調整 */
+    .controls-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+      font-size: 11px;
+      color: #a0a5b5;
+    }
+
+    .control-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* キーボードキー風のデザイン */
+    kbd {
+      background: #1e2130;
+      border: 1px solid #3a3f58;
+      border-bottom-width: 2px;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 10px;
+      font-family: monospace;
+      color: #00f0f0;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- 左サイドバー（HOLD & 操作説明） -->
+    <div class="sidebar">
+      <div class="panel">
+        <div class="panel-title">HOLD</div>
+        <canvas id="hold" width="80" height="80"></canvas>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">CONTROLS</div>
+        <div class="controls-list">
+          <div class="control-item"><span>移動</span><div><kbd>←</kbd><kbd>→</kbd></div></div>
+          <div class="control-item"><span>ソフト落下</span><kbd>↓</kbd></div>
+          <div class="control-item"><span>回転</span><kbd>↑</kbd></div>
+          <div class="control-item"><span>ハード落下</span><kbd>SPACE</kbd></div>
+          <div class="control-item"><span>ホールド</span><kbd>SHIFT</kbd></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- メインキャンバス -->
+    <canvas id="tetris"></canvas>
+
+    <!-- 右サイドバー（NEXT & SCORE） -->
+    <div class="sidebar">
+      <div class="panel">
+        <div class="panel-title">NEXT</div>
+        <canvas id="next" width="80" height="80"></canvas>
+      </div>
+      <div class="panel">
+        <div class="panel-title">SCORE</div>
+        <div id="score" class="score-num">0</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
